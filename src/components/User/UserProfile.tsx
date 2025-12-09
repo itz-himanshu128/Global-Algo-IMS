@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
 
 interface UserProfileProps {
   onProfileUpdate?: (data: ProfileData) => void;
@@ -16,14 +17,15 @@ const UserProfile: React.FC<UserProfileProps> = ({
   onProfileUpdate,
   onPasswordChange,
 }) => {
+  const { user } = useAuth();
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
 
   const [profileData, setProfileData] = useState<ProfileData>({
-    name: 'Suresh Kumar',
-    email: 'suresh.kumar@company.com',
-    username: 'suresh.kumar',
-    joinDate: 'January 15, 2024',
+    name: user?.name || 'User',
+    email: user?.email || 'user@example.com',
+    username: user?.username || user?.email?.split('@')[0] || 'user',
+    joinDate: user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown',
   });
 
   const [editData, setEditData] = useState<ProfileData>(profileData);

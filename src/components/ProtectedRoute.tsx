@@ -57,7 +57,7 @@ export const RoleBasedRedirect: React.FC = () => {
   // Route to appropriate dashboard based on role
   switch (user.role) {
     case 'Admin':
-      return <Navigate to="/admin/users" replace />;
+      return <Navigate to="/admin" replace />;
     case 'TeamLead':
       return <Navigate to="/teamlead" replace />;
     case 'Agent':

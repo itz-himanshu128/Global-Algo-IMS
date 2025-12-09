@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { authService, User } from '../services/authService';
+import { authService } from '../services/authService';
+import type { User } from '../services/authService';
 
 export type UserRole = 'Admin' | 'TeamLead' | 'Agent' | 'User' | null;
 
@@ -27,7 +28,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (token && storedUser) {
         try {
-          const parsedUser = JSON.parse(storedUser);
           // Verify token is still valid by fetching current user from backend
           const currentUser = await authService.getCurrentUser();
           setUser(currentUser);

@@ -178,6 +178,19 @@ const App: React.FC = () => {
 
           {/* Admin Routes */}
           <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requiredRoles={['Admin']}>
+                <AdminLayout>
+                  <div className="p-6">
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Admin Dashboard</h1>
+                    <p className="text-gray-600 dark:text-gray-400">Welcome to the Admin Dashboard. Use the sidebar to navigate.</p>
+                  </div>
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/admin/users"
             element={
               <ProtectedRoute requiredRoles={['Admin']}>

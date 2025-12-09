@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
 
 interface UserDashboardProps {
-  userName?: string;
   onThemeToggle?: (isDark: boolean) => void;
 }
 
 const UserDashboard: React.FC<UserDashboardProps> = ({
-  userName = 'Suresh Kumar',
   onThemeToggle,
 }) => {
+  const { user } = useAuth();
   const [isDarkMode, setIsDarkMode] = useState(
     document.documentElement.classList.contains('dark')
   );
+
+  if (!user) {
+    return <div>Loading user data...</div>;
+  }
+
+  const userName = user.name || 'User';
+  const userEmail = user.email || 'user@example.com';
 
   const handleThemeToggle = () => {
     const newDarkMode = !isDarkMode;
@@ -100,7 +107,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
                   Email
                 </label>
                 <p className="text-lg text-gray-900 dark:text-white mt-1">
-                  {userName.toLowerCase().replace(/\s+/g, '.')}@company.com
+                  {userEmail}
                 </p>
               </div>
               <div>
@@ -108,7 +115,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
                   Role
                 </label>
                 <p className="text-lg text-gray-900 dark:text-white mt-1">
-                  User
+                  {user.role}
                 </p>
               </div>
               <div>
